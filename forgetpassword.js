@@ -1,4 +1,4 @@
-const userModel = require("../models/userModel");
+const userModel = require('../models/usermodel');
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 
@@ -14,14 +14,14 @@ const ForgetPassword = async (req, res) => {
 
         // Create JWT token for password reset
         const tokenData = { _id: user._id, email: user.email };
-        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: '1d' }); // 1-day expiration
+        const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: '1d' }); // 1-day expiration
 
         // Configure nodemailer transport
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER,  // Gmail address stored in .env
-                pass: process.env.EMAIL_PASS,  // Gmail app-specific password stored in .env
+                user: "alemuyohannes960@gmail.com",  // Gmail address stored in .env
+                pass: "cotg gmba gvbl bfko",  // Gmail app-specific password stored in .env
             }
         });
 
@@ -30,7 +30,7 @@ const ForgetPassword = async (req, res) => {
             from: process.env.EMAIL_USER,  // Sender's email
             to: email,                     // Recipient's email
             subject: 'ShopEasy Reset Your Password',
-            text: `Click the following link to reset your password: https://mern-eccomerce-website-1-etxt.onrender.com/reset_password/${user._id}/${token}`
+            text: `Click the following link to reset your password: http://localhost:8000/api/reset_password/${user._id}/${token}`
         };
 
         // Send the email using nodemailer
